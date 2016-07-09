@@ -117,7 +117,7 @@ while addr < last:
 	if s[0:-1] in olist:
 		strings = olist[s[0:-1]]
 
-		addr2 = ad
+		addr2 = sec.getStartingAddress()
 		while addr2 < last:
 			s2,ad2 = readAscii(seg,addr2,last)
 
