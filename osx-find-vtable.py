@@ -1,5 +1,7 @@
 import re
 
+f = open('/Users/vit/vtables.txt', 'w')
+
 doc = Document.getCurrentDocument()
 dataseg = doc.getSegmentByName('__DATA')
 textseg = doc.getSegmentByName('__TEXT')
@@ -36,7 +38,7 @@ def process(classname,addr,end):
 		return
 
 	vtable = refs[0] + 8
-	print "<vtable-address name='%s' value='0x%016x'/>" % (classname, vtable)
+	f.write ("<vtable-address name='%s' value='0x%016x'/>\n" % (classname, vtable))
 	
 
 #######################################################
@@ -74,3 +76,6 @@ while addr < end:
 	addr = ad+len(s)+1
 #######################################################
 			
+f.close()
+
+print 'DONE'

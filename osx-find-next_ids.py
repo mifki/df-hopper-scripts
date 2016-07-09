@@ -1,3 +1,5 @@
+f = open('/Users/vit/next_ids.txt', 'w')
+
 doc = Document.getCurrentDocument()
 seg = doc.getSegmentByName('__TEXT')
 
@@ -40,7 +42,7 @@ def process(seg, s, a):
 			if i.getFormattedArgument(0) == reg:
 				gaddr = i.getFormattedArgument(1)[1:-1]
 				gaddr = int(gaddr, 16)
-				print "<global-address name='%s_next_id' value='0x%016x'/>" % (s, gaddr)
+				f.write("<global-address name='%s_next_id' value='0x%016x'/>\n" % (s, gaddr))
 				break
 
 
@@ -61,3 +63,6 @@ while addr < last:
 	addr = ad+len(s)+1
 
 
+f.close()
+
+print 'DONE'

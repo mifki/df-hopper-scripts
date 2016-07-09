@@ -1,3 +1,5 @@
+f = open('/Users/vit/orders.txt', 'w')
+
 doc = Document.getCurrentDocument()
 seg = doc.getSegmentByName('__TEXT')
 
@@ -41,7 +43,7 @@ def process(seg, s, a):
 				if i.getFormattedArgument(0) == reg:
 					gaddr = i.getFormattedArgument(1)[1:-1]
 					gaddr = int(gaddr, 16)
-					print "<global-address name='standing_orders_%s' value='0x%016x'/>" % (s, gaddr)
+					f.write ("<global-address name='standing_orders_%s' value='0x%016x'/>\n" % (s, gaddr))
 					break
 	except:
 		print 'error finding', s
@@ -130,3 +132,6 @@ while addr < last:
 	addr = ad+len(s)+1
 
 
+f.close()
+
+print 'DONE'
