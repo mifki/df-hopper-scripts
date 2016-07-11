@@ -18,9 +18,14 @@ def readAscii(seg,addr,end):
 				return ret, started
 			else:
 				continue
+		elif b < ord('0') or b > ord('9'):
+				if not started:
+					continue
 		ret = ret + chr(b)
 		if not started:
 			started = addr-1
+
+	return '',end
 
 def process(classname,addr,end):
 	refs = textseg.getReferencesOfAddress(addr)
