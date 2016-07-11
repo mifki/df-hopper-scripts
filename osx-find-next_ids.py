@@ -42,7 +42,7 @@ def process(seg, s, a):
 			if i.getFormattedArgument(0) == reg:
 				gaddr = i.getFormattedArgument(1)[1:-1]
 				gaddr = int(gaddr, 16)
-				f.write("<global-address name='%s_next_id' value='0x%016x'/>\n" % (s, gaddr))
+				f.write("<global-address name='%s_next_id' value='0x%08x'/>\n" % (s, gaddr))
 				break
 
 

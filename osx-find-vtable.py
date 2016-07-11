@@ -39,9 +39,8 @@ def process(classname,addr,end):
 
 	for i in range(0,len(refs)):
 		vtable = refs[i] + 8
-		print "trying 0x%x" % vtable
 		if doc.readUInt64LE(vtable):
-			f.write ("<vtable-address name='%s' value='0x%016x'/>\n" % (classname, vtable))
+			f.write ("<vtable-address name='%s' value='0x%08x'/>\n" % (classname, vtable))
 			break
 	
 
@@ -74,8 +73,9 @@ ss = -1
 while addr < end:
 	s,ad = readAscii(textseg,addr,end)
 	textseg.setTypeAtAddress(ad, len(s)+1, Segment.TYPE_ASCII)
-	if re.match("([0-9]+)([a-z_]+.+st)", s):
-		classname = s[2:] #use proper value from regex
+	m = re.match("([0-9]+)([a-z_]+.+st)", s)
+	if m:
+		classname = m.group(2)
 		process(classname, ad, end)
 	addr = ad+len(s)+1
 #######################################################
