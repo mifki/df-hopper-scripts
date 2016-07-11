@@ -37,8 +37,12 @@ def process(classname,addr,end):
 		print 'can not find more refs for', classname
 		return
 
-	vtable = refs[0] + 8
-	f.write ("<vtable-address name='%s' value='0x%016x'/>\n" % (classname, vtable))
+	for i in range(0,len(refs)):
+		vtable = refs[i] + 8
+		print "trying 0x%x" % vtable
+		if doc.readUInt64LE(vtable):
+			f.write ("<vtable-address name='%s' value='0x%016x'/>\n" % (classname, vtable))
+			break
 	
 
 #######################################################
@@ -70,8 +74,8 @@ ss = -1
 while addr < end:
 	s,ad = readAscii(textseg,addr,end)
 	textseg.setTypeAtAddress(ad, len(s)+1, Segment.TYPE_ASCII)
-	if re.match("[0-9]+[a-z_]+.+st", s):
-		classname = s[2:]
+	if re.match("([0-9]+)([a-z_]+.+st)", s):
+		classname = s[2:] #use proper value from regex
 		process(classname, ad, end)
 	addr = ad+len(s)+1
 #######################################################

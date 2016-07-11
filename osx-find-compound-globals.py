@@ -1,3 +1,5 @@
+f = open('/Users/vit/ctors.txt', 'w')
+
 atexit = 'imp___symbol_stub1____cxa_atexit'
 
 doc = Document.getCurrentDocument()
@@ -35,6 +37,10 @@ for i in range(0,len(globals)-1):
 	p = seg.getProcedureAtAddress(callsite)
 	ctorlist = 'sub_'+("%x" % p.getEntryPoint())
 
-	print '<global-object name="?" offset="0x%x" size="%d">' % (offset, size)
-	print '    <comment>ctorlist="%s" callsite="0x%x" </comment>' % (ctorlist, callsite)
-	print '</global-object>'
+	f.write('<global-object name="?" offset="0x%x" size="%d">\n' % (offset, size))
+	f.write('    <comment>ctorlist="%s" callsite="0x%x" </comment>\n' % (ctorlist, callsite))
+	f.write('</global-object>\n')
+
+f.close()
+
+print 'DONE'
