@@ -54,7 +54,17 @@ for s in dataseg.getSectionsList():
 	if s.getName() == '__const':
 		sec = s
 		break
+i = sec.getStartingAddress()
+end = i + sec.getLength()
 
+while i < end:
+	dataseg.setTypeAtAddress(i, 8, Segment.TYPE_LONG)
+	i = i + 8
+#######################################################
+for s in dataseg.getSectionsList():
+	if s.getName() == '__const_coal':
+		sec = s
+		break
 i = sec.getStartingAddress()
 end = i + sec.getLength()
 
@@ -70,9 +80,14 @@ for s in textseg.getSectionsList():
 	if s.getName() == '__const':
 		sec = s
 		break
-
 addr = sec.getStartingAddress()
-end = addr + sec.getLength()
+
+# __const_coal is right after __const
+for s in textseg.getSectionsList():
+	if s.getName() == '__const_coal':
+		sec = s
+		break
+end = sec.getStartingAddress() + sec.getLength()
 
 ss = -1
 while addr < end:
