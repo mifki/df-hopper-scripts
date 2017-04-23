@@ -93,7 +93,7 @@ ss = -1
 while addr < end:
 	s,ad = readAscii(textseg,addr,end)
 	textseg.setTypeAtAddress(ad, len(s)+1, Segment.TYPE_ASCII)
-	m = re.match("([0-9]+)([a-z_]+.+st)", s)
+	m = re.match("([0-9]+)([a-z_]+.+st|renderer.*)", s)
 	if m:
 		classname = m.group(2)
 		process(classname, ad, end)
